@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/server.ts",
-    "setup": "ts-node src/setup.ts"
+    "setup": "ts-node src/setup.ts",
+    "tsc": "tsc"
   },
   "keywords": [],
   "author": "",
