@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 import * as goodService from '../services/goods';
 
-export const getAll = (req: Request, res: Response) => {
-    const goods = goodService.getAll();
+export const getAll = async (req: Request, res: Response) => {
+    const goods = await goodService.getAll();
 
     res.send(goods);
 }
 
-export const getOne = (req: Request, res: Response) => {
+export const getOne = async (req: Request, res: Response) => {
     const { goodId } = req.params;
 
     if (isNaN(+goodId)) {
@@ -15,7 +15,7 @@ export const getOne = (req: Request, res: Response) => {
         return;
     }
 
-    const foundGood = goodService.getById(+goodId);
+    const foundGood = await goodService.getById(+goodId);
 
     if (!foundGood) {
         res.sendStatus(404);
@@ -25,7 +25,7 @@ export const getOne = (req: Request, res: Response) => {
     res.send(foundGood);
 }
 
-export const addGood = (req: Request, res: Response) => {
+export const addGood = async (req: Request, res: Response) => {
     const { name, colorId } = req.body;
 
     if (!name || !colorId) {
@@ -33,21 +33,21 @@ export const addGood = (req: Request, res: Response) => {
         return;
     }
 
-    const good = goodService.addGood(name, +colorId);
+    const good = await goodService.addGood(name, +colorId);
 
     res.status(201);
     res.send(good);
 }
 
-export const removeGood = (req: Request, res: Response) => {
+export const removeGood = async (req: Request, res: Response) => {
     const { goodId } = req.params;
-    const foundGood = goodService.getById(+goodId);
+    const foundGood = await goodService.getById(+goodId);
 
     if (!foundGood) {
         res.sendStatus(404);
         return;
     }
 
-    goodService.removeGood(+goodId);
+    await goodService.removeGood(+goodId);
     res.sendStatus(204);
 }

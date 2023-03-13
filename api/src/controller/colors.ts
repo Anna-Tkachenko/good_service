@@ -1,14 +1,13 @@
 import { Request, Response } from 'express';
 import * as colorService from '../services/colors';
 
-
-export const getAll = (req: Request, res: Response) => {
-    const colors = colorService.getAll();
+export const getAll = async (req: Request, res: Response) => {
+    const colors = await colorService.getAll();
 
     res.send(colors);
 }
 
-export const getOne = (req: Request, res: Response) => {
+export const getOne = async (req: Request, res: Response) => {
     const { colorId } = req.params;
 
     if (isNaN(+colorId)) {
@@ -16,7 +15,7 @@ export const getOne = (req: Request, res: Response) => {
         return;
     }
 
-    const foundColor = colorService.getById(+colorId);
+    const foundColor = await colorService.getById(+colorId);
 
     if (!foundColor) {
         res.sendStatus(404);
